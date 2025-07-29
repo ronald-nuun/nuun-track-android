@@ -23,6 +23,13 @@ class HomepageViewModel @Inject constructor(
         _pageViewState.value = viewState
     }
 
+    private val _isRefreshing by lazy { MutableStateFlow(false) }
+    val isRefreshing: StateFlow<Boolean> get() = _isRefreshing.asStateFlow()
+
+    fun updateIsRefreshing(isRefreshing: Boolean) {
+        _isRefreshing.value = isRefreshing
+    }
+
     private val _query by lazy { MutableStateFlow("") }
     val query: StateFlow<String> get() = _query.asStateFlow()
 

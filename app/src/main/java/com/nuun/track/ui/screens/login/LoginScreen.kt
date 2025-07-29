@@ -197,12 +197,12 @@ fun LoginButton(
             isLoadingEnabled = isLoading,
             onClick = {
                 // TODO: hit the API
-//                loginViewModel.login(email, password)
+                loginViewModel.login(email, password)
 
                 // TODO: remove this later
-                navController.navigate(HomeNavScreen.Homepage.route) {
+//                navController.navigate(HomeNavScreen.Homepage.route) {
 //                    popUpTo(AuthNavScreen.Login.route) { inclusive = true }
-                }
+//                }
             },
         )
     }

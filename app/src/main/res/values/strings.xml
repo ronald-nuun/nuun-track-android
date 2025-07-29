@@ -8,6 +8,11 @@
     <string name="label_unexpected_error_message">Terjadi kesalahan tak terduga. Silakan coba lagi.</string>
     <!--endregion Internet Connection-->
 
+    <!--region error-->
+    <string name="error_network">Network Error</string>
+    <string name="error_network_desc">There was a problem connecting, make sure\nyour network online and pull to refresh.</string>
+    <!--endregion error-->
+
     <!--region dummy-->
     <string name="dummy_text">Teks dummy</string>
     <string name="dummy_home">Rumah Saya</string>
@@ -22,6 +27,7 @@
     <string name="desc_back">Kembali</string>
     <string name="desc_menu">Menu</string>
     <string name="desc_loading">Memuat</string>
+    <string name="desc_no_data">Tidak terdapat data</string>
     <!--endregion Image Desc-->
 
     <!--region hint-->

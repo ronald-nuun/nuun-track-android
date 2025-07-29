@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -24,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.nuun.track.ui.components.network_error.NetworkError
 import com.nuun.track.R
 import com.nuun.track.domain.configs.TextFieldConfig
 import com.nuun.track.ui.components.forms.TextFieldWithIcons
@@ -32,11 +36,25 @@ import com.nuun.track.ui.theme.Neutral100
 import com.nuun.track.ui.theme.Neutral1000
 import com.nuun.track.ui.theme.Neutral1100
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomepageScreen(
     navController: NavController,
     homepageViewModel: HomepageViewModel = hiltViewModel(),
 ) {
+
+    val refreshState = rememberPullToRefreshState()
+    val pageViewState by homepageViewModel.pageViewState.collectAsState()
+    val isRefreshing by homepageViewModel.isRefreshing.collectAsState()
+
+    LaunchedEffect(isRefreshing) {
+        if (isRefreshing) {
+            // TODO: get recent order
+//            homepageViewModel.getHomepage()
+            homepageViewModel.updateIsRefreshing(false)
+        }
+    }
+
     Scaffold(
         containerColor = Neutral1000,
     ) { paddingValues ->
@@ -58,7 +76,17 @@ fun HomepageScreen(
             )
             Spacer(modifier = Modifier.height(18.dp))
             // space antar item dalam list 10
+            pageViewState
+                .onSuccess {
 
+                }
+                .onError {
+                    NetworkError(
+                        refreshState = refreshState,
+                        isRefreshing = isRefreshing,
+                        onRefresh = { homepageViewModel.updateIsRefreshing(true) }
+                    )
+                }
         }
     }
 }
