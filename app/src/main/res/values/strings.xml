@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Nuun Track</string>
+
+    <!--region Internet Connection-->
+    <string name="label_no_internet_error_message">Tidak ada koneksi internet. Silakan periksa koneksi Anda dan coba lagi.</string>
+    <string name="label_server_error_message">Ups! Terjadi kesalahan pada server kami. Silakan coba lagi nanti.</string>
+    <string name="label_parsing_error_message">Kami mengalami kesulitan memproses data. Silakan segarkan dan coba lagi.</string>
+    <string name="label_unexpected_error_message">Terjadi kesalahan tak terduga. Silakan coba lagi.</string>
+    <!--endregion Internet Connection-->
+
+    <!--region dummy-->
+    <string name="dummy_text">Teks dummy</string>
+    <string name="dummy_home">Rumah Saya</string>
+    <string name="dummy_room">Apartemen Saya</string>
+    <string name="dummy_email">don.corlenio@gmail.com</string>
+    <string name="dummy_delete_account_time">13/04/2024 00:00:00</string>
+    <!--endregion dummy-->
+
+    <!--region Image Desc-->
+    <string name="desc_logo">Logo</string>
+    <string name="desc_image">Gambar</string>
+    <string name="desc_back">Kembali</string>
+    <string name="desc_menu">Menu</string>
+    <string name="desc_loading">Memuat</string>
+    <!--endregion Image Desc-->
+
+    <!--region hint-->
+    <string name="hint_enter_your_email">Masukkan email Anda</string>
+    <string name="hint_enter_your_password">Masukkan kata sandi Anda</string>
+    <string name="hint_confirm_password">Konfirmasi kata sandi</string>
+    <string name="hint_enter_password">Masukkan kata sandi</string>
+    <string name="hint_enter_transaction_id">Masukkan ID Transaksi</string>
+    <!--endregion hint-->
+
+    <!--region warning-->
+    <string name="warning_email_empty">Email wajib diisi</string>
+    <string name="warning_email_not_valid">Format email tidak valid</string>
+    <string name="warning_password_empty">Kata sandi wajib diisi</string>
+    <string name="warning_confirm_password_empty">Konfirmasi kata sandi wajib diisi</string>
+    <string name="warning_phone_is_required">Nomor telepon wajib diisi</string>
+    <string name="warning_min_word_int">Minimal kata adalah %1$d</string>
+    <string name="warning_agree_policy_and_terms">Silakan setujui Kebijakan dan Syarat</string>
+    <string name="warning_field_required">Kolom ini tidak boleh kosong</string>
+    <string name="warning_password_not_match">Kata sandi tidak cocok</string>
+    <string name="warning_room_api_not_ready">API Kamar belum siap,\ncoba lagi nanti</string>
+    <!--endregion warning-->
+
+    <string name="label_welcome_to_nuun">Selamat datang di NuunTrack</string>
+    <string name="label_forgot_password">Lupa kata sandi?</string>
+    <string name="label_login">Masuk</string>
+    <string name="label_find_transaction">Cari Transaksi</string>
+</resources>

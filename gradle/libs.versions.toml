@@ -1,0 +1,180 @@
+[versions]
+#App
+appId = "com.nuun.track"
+appName = "Nuun Track"
+versionCode = "1"
+versionName = "1.0.0"
+
+#SDK Version
+compileSdkVersion = "36"
+minSdkVersion = "23"
+targetSdkVersion = "36"
+
+#Plugins
+agp = "8.11.1"
+kotlin = "2.2.0"
+hiltPlugin = "2.57"
+ksp = "2.2.0-2.0.2"
+
+#Core
+coreKtx = "1.16.0"
+coroutines = "1.10.2"
+
+#Testing
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+
+#Lifecycle
+lifecycleRuntimeKtx = "2.9.2"
+
+#Compose
+activityCompose = "1.10.1"
+composeBom = "2025.07.00"
+hiltCompose = "1.2.0"
+
+#UI Libraries
+intuit = "1.1.1"
+
+#Dep. Injection
+hilt = "2.57"
+
+#Networking
+okhttp = "5.1.0"
+retrofit = "3.0.0"
+moshi = "1.15.2"
+chucker = "4.2.0"
+
+#Navigation
+navigation = "2.9.2"
+
+#DataStore
+datastore = "1.1.7"
+
+#Accompaniest
+accompanies = "0.37.3"
+swiperefresh = "0.36.0"
+
+#Security
+security-crypto = "1.0.0"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+#Testing
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+#Lifecycle
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+
+#Compose
+compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+compose-ui = { group = "androidx.compose.ui", name = "ui" }
+compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltCompose" }
+
+# Intuit
+intuit-sdp = { module = "com.intuit.sdp:sdp-android", version.ref = "intuit" }
+intuit-ssp = { module = "com.intuit.ssp:ssp-android", version.ref = "intuit" }
+
+# Hilt
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-android-test = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+
+# Coroutines
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+# OkHttp
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+
+# Moshi
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
+moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
+
+# Retrofit
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+
+# Chucker
+chucker = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker" }
+chucker-no-op = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chucker" }
+
+# Navigation
+navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
+navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
+
+# DataStore
+datastore-pref = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore" }
+
+# Accompanies
+accompanies-permission = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanies" }
+accompanies-drawable = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanies" }
+accompanies-swipe-refresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "swiperefresh" }
+
+#Security
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "security-crypto" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltPlugin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
+
+[bundles]
+compose = [
+    "compose-activity",
+    "compose-ui",
+    "compose-ui-graphics",
+    "compose-ui-tooling-preview",
+    "compose-material3",
+    "hilt-compose"
+]
+intuit = [
+    "intuit-sdp",
+    "intuit-ssp"
+]
+coroutine = [
+    "coroutines-core",
+    "coroutines-android"
+]
+okhttp = [
+    "okhttp",
+    "okhttp-logging-interceptor"
+]
+retrofit = [
+    "retrofit",
+    "retrofit-converter-moshi"
+]
+lifecycle = [
+    "androidx-lifecycle-runtime-ktx",
+]
+navigation = [
+    "navigation-fragment",
+    "navigation-ui"
+]
+accompanies = [
+    "accompanies-permission",
+    "accompanies-drawable",
+    "accompanies-swipe-refresh",
+]
+datastore = [
+    "datastore",
+    "datastore-core",
+    "datastore-pref"
+]
