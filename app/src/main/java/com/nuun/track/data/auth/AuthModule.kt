@@ -1,6 +1,5 @@
 package com.nuun.track.data.auth
 
-import com.nuun.track.core.configs.networking.TokenProvider
 import com.nuun.track.domain.auth.AuthRepository
 import com.nuun.track.utility.consts.AppConsts
 import com.nuun.track.utility.qualifier.AuthApiQualifier
@@ -37,12 +36,10 @@ object AuthModule {
     @Singleton
     fun providesEWeLinkUserRepository(
         @AuthApiQualifier authApi: AuthApi,
-        moshi: Moshi,
-        tokenProvider: TokenProvider
+        moshi: Moshi
     ): AuthRepository = AuthRepositoryImpl(
         moshi = moshi,
-        authApi = authApi,
-        token = tokenProvider
+        authApi = authApi
     )
 
 }
