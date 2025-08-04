@@ -2,6 +2,7 @@ package com.nuun.track.core.pref_data_store
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.nuun.track.domain.auth.response.UserDomain
@@ -17,6 +18,7 @@ class PrefDataStoreManagerImpl @Inject constructor(
 
     // region pref key
     private val userDetail = stringPreferencesKey(USER_DETAIL_PREF)
+    private val updateFlag = booleanPreferencesKey(UPDATE_FLAG)
     // endregion pref key
 
     // region adapter
@@ -34,6 +36,18 @@ class PrefDataStoreManagerImpl @Inject constructor(
             it[userDetail]?.let { profile ->
                 userAdapter.fromJson(profile)
             }
+        }
+    }
+
+    override suspend fun setUpdateFlag(status: Boolean) {
+        preferences.edit {
+            it[updateFlag] = status
+        }
+    }
+
+    override fun getUpdateFlag(): Flow<Boolean> {
+        return preferences.data.map {
+            it[updateFlag] == true
         }
     }
 

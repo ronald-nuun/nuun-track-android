@@ -9,5 +9,9 @@ interface PrefDataStoreManager {
 
     fun getUser(): Flow<UserDomain?>
 
+    suspend fun setUpdateFlag(status: Boolean)
+
+    fun getUpdateFlag(): Flow<Boolean>
+
     suspend fun clearDataStore()
 }
