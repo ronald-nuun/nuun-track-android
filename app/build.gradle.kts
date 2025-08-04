@@ -114,5 +114,11 @@ dependencies {
         // Crypto
         implementation(androidx.security.crypto)
 
+        // Coil
+        implementation(coil)
+
+        // ExoPlayer
+        implementation(bundles.exoPlayer)
+
     }
 }
