@@ -7,5 +7,8 @@ data class ReservationDomain(
     val reservationDetail: ReservationDetailDomain? = null,
     val pricing: PricingDomain? = null,
     val timestamps: TimestampsDomain? = null,
-    val notes: String? = null
+    val notes: String? = null,
+    val files: ReservationFilesDomain? = null,
+    val evidenceStart: List<ReservationFilesDomain>? = null,
+    val evidenceEnd: List<ReservationFilesDomain>? = null,
 )

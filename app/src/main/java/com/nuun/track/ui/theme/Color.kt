@@ -54,6 +54,14 @@ val ColorInputDefault = Neutral800
 val ColorBgIcon = Neutral700
 val ColorOnline = Neutral200
 val ColorOffline = Neutral900
+val ColorTopBar = Neutral1100
+
+// region primary
+val ColorPrimary = Accent100
+val ColorOnPrimary = Neutral1100
+val ColorPrimaryDark = Accent100
+val ColorOnPrimaryDark = Neutral1100
+// endregion primary
 
 // region button
 val ColorBtnTextPrimary = Neutral1100
@@ -97,13 +105,13 @@ val ColorBgToolbar = Neutral1100
 // region scheme
 val LightColorScheme = lightColorScheme(
     background = ColorContainer,
-    primary = ColorTextDefault,
-    onPrimary = ColorTextButton,
+    primary = ColorPrimary,
+    onPrimary = ColorOnPrimary,
 )
 
 val DarkColorScheme = darkColorScheme(
     background = ColorContainer,
-    primary = ColorTextDefault,
-    onPrimary = ColorTextButton,
+    primary = ColorPrimaryDark,
+    onPrimary = ColorOnPrimaryDark,
 )
 // endregion scheme

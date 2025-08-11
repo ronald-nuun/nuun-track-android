@@ -1,4 +1,4 @@
-package com.nuun.track.ui.components
+package com.nuun.track.ui.components.toolbar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,9 +26,9 @@ import androidx.compose.ui.unit.dp
 import com.nuun.track.R
 import com.nuun.track.domain.configs.MenuTextConfig
 import com.nuun.track.domain.configs.ToolbarConfig
-import com.nuun.track.ui.theme.ColorBgToolbar
 import com.nuun.track.ui.theme.ColorTextDefault
 import com.nuun.track.ui.theme.ColorTextInput
+import com.nuun.track.ui.theme.ColorTopBar
 
 @Composable
 fun CustomToolbar(
@@ -40,7 +40,7 @@ fun CustomToolbar(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = ColorBgToolbar
+                color = ColorTopBar
             )
     ) {
         Row(

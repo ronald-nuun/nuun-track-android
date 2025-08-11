@@ -10,4 +10,6 @@ annotation class OkhttpQualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class AuthApiQualifier
 
-
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ReservationApiQualifier

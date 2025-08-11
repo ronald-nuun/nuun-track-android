@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Nuun Track</string>
 
+    <!--region Permission Strings-->
+    <string name="title_notification_permission">Izin Pemberitahuan</string>
+    <string name="label_notification_permission_detail">Harap berikan izin pemberitahuan untuk mengakses semua fitur.</string>
+    <string name="label_notification_permission_permanently_denied">Izin notifikasi telah ditolak secara permanen. Harap aktifkan secara manual di pengaturan untuk menggunakan semua fitur.</string>
+    <!--endregion Permission Strings-->
+
     <!--region Internet Connection-->
     <string name="label_no_internet_error_message">Tidak ada koneksi internet. Silakan periksa koneksi Anda dan coba lagi.</string>
     <string name="label_server_error_message">Ups! Terjadi kesalahan pada server kami. Silakan coba lagi nanti.</string>
@@ -9,12 +15,13 @@
     <!--endregion Internet Connection-->
 
     <!--region error-->
-    <string name="error_network">Network Error</string>
-    <string name="error_network_desc">There was a problem connecting, make sure\nyour network online and pull to refresh.</string>
+    <string name="error_network">Jaringan Bermasalah</string>
+    <string name="error_network_desc">Terjadi masalah saat menghubungkan, pastikan jaringan Anda terkoneksi dan geser ke bawah untuk menyegarkan.</string>
+    <string name="error_no_data">Data Tidak Ditemukan</string>
     <!--endregion error-->
 
     <!--region dummy-->
-    <string name="dummy_text">Teks dummy</string>
+    <string name="dummy_text">Teks sampel</string>
     <string name="dummy_home">Rumah Saya</string>
     <string name="dummy_room">Apartemen Saya</string>
     <string name="dummy_email">don.corlenio@gmail.com</string>
@@ -28,6 +35,8 @@
     <string name="desc_menu">Menu</string>
     <string name="desc_loading">Memuat</string>
     <string name="desc_no_data">Tidak terdapat data</string>
+    <string name="desc_close">Close</string>
+    <string name="desc_video_thumbnail">Video thumbnail</string>
     <!--endregion Image Desc-->
 
     <!--region hint-->
@@ -54,5 +63,27 @@
     <string name="label_welcome_to_nuun">Selamat datang di NuunTrack</string>
     <string name="label_forgot_password">Lupa kata sandi?</string>
     <string name="label_login">Masuk</string>
+    <string name="label_logout">Keluar</string>
     <string name="label_find_transaction">Cari Transaksi</string>
+    <string name="label_setting">Pengaturan</string>
+    <string name="label_later">Atur Nanti</string>
+    <string name="label_reservation_detail">Detail Reservasi</string>
+    <string name="label_start_trip">Mulai Perjalanan</string>
+    <string name="label_return_confirmation">Konfirmasi Pengembalian</string>
+    <string name="label_customer_information">Informasi Pelanggan</string>
+    <string name="label_name">Nama</string>
+    <string name="label_phone_number">Nomor HP</string>
+    <string name="label_email">Email</string>
+    <string name="label_upload_vehicle_evidence">Upload Bukti Kondisi Kendaraan</string>
+    <string name="label_vehicle_evidence_start">Bukti Kondisi Mulai Kendaraan</string>
+    <string name="label_vehicle_evidence_end">Bukti Kondisi Akhir Kendaraan</string>
+    <string name="label_no_thumbnail">No thumbnail</string>
+    <string name="label_unsupported_file">Unsupported</string>
+    <string name="desc_remove">Remove</string>
+    <string name="label_wait_evidence_upload">Mohon tunggu upload bukti kendaraan selesai</string>
+    <string name="label_reservation_date">Tanggal Perjalanan</string>
+    <string name="label_reservation_date_return">Tanggal Pengembalian</string>
+    <string name="label_duration">Durasi</string>
+    <string name="label_total_price">Total Harga</string>
+    <string name="label_video">Video</string>
 </resources>

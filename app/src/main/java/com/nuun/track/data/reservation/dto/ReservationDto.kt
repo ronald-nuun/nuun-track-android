@@ -19,7 +19,13 @@ data class ReservationDto(
     @Json(name = "timestamps")
     val timestamps: TimestampsDto? = null,
     @Json(name = "notes")
-    val notes: String? = null
+    val notes: String? = null,
+    @Json(name = "files")
+    val files: ReservationFilesDto? = null,
+    @Json(name = "evidence_start")
+    val evidenceStart: List<ReservationFilesDto>? = null,
+    @Json(name = "evidence_end")
+    val evidenceEnd: List<ReservationFilesDto>? = null,
 ) {
     fun toDomain(): ReservationDomain = ReservationDomain(
         id = id,
@@ -28,6 +34,9 @@ data class ReservationDto(
         reservationDetail = reservationDetails?.toDomain(),
         pricing = pricing?.toDomain(),
         timestamps = timestamps?.toDomain(),
-        notes = notes.orEmpty()
+        notes = notes.orEmpty(),
+        files = files?.toDomain(),
+        evidenceStart = evidenceStart?.map { it.toDomain() },
+        evidenceEnd = evidenceEnd?.map { it.toDomain() }
     )
 }

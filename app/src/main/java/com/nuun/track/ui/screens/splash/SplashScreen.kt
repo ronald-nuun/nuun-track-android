@@ -34,16 +34,18 @@ fun SplashScreen(
     }
 
     LaunchedEffect(navigationEvent) {
-        when(navigationEvent) {
-            is SplashNavEvent.ToHomepage -> {
-                navController.navigate(HomeNavScreen.Homepage.route) {
-                    popUpTo(NavScreen.Splash.route) { inclusive = true }
+        navigationEvent?.let {
+            when (it) {
+                is SplashNavEvent.ToHomepage -> {
+                    navController.navigate(HomeNavScreen.Homepage.route) {
+                        popUpTo(NavScreen.Splash.route) { inclusive = true }
+                    }
                 }
-            }
 
-            else -> {
-                navController.navigate(AuthNavScreen.Login.route) {
-                    popUpTo(NavScreen.Splash.route) { inclusive = true }
+                is SplashNavEvent.ToLogin -> {
+                    navController.navigate(AuthNavScreen.Login.route) {
+                        popUpTo(NavScreen.Splash.route) { inclusive = true }
+                    }
                 }
             }
         }

@@ -26,6 +26,7 @@ data class TextFieldConfig(
     val lineCount: Int = 1,
     val backgroundColor: Color = ColorInputDefault,
     val textColor: Color = ColorTextDefault,
+    val cursorColor: Color = ColorTextDefault,
     val roundedSize: Dp = 50.dp,
     val keyboardActions: KeyboardActions = KeyboardActions.Default,
 )

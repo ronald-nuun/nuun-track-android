@@ -11,7 +11,7 @@ import com.nuun.track.navigation.screens.AuthNavScreen
 import com.nuun.track.navigation.screens.HomeNavScreen
 import com.nuun.track.ui.screens.homepage.HomepageScreen
 import com.nuun.track.ui.screens.login.LoginScreen
-import com.nuun.track.ui.screens.order_detail.OrderDetail
+import com.nuun.track.ui.screens.reservation.detail.ReservationDetailScreen
 import com.nuun.track.ui.screens.splash.SplashScreen
 import com.nuun.track.utility.logger.ConsoleLogger
 
@@ -43,8 +43,8 @@ fun AppNavigation(
             HomepageScreen(navController)
         }
 
-        composable(HomeNavScreen.OrderDetail.route) {
-            OrderDetail(navController)
+        composable(HomeNavScreen.ReservationDetail.route) {
+            ReservationDetailScreen(navController)
         }
 
     }

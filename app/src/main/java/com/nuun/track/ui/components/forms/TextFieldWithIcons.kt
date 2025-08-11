@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
@@ -43,6 +45,8 @@ import com.nuun.track.ui.theme.ColorTextDefault
 import com.nuun.track.ui.theme.ColorTextError
 import com.nuun.track.ui.theme.ColorTextInput
 import com.nuun.track.ui.theme.ColorTextInputDisabled
+import com.nuun.track.ui.theme.Neutral100
+import com.nuun.track.ui.theme.Neutral1100
 
 @Composable
 fun TextFieldWithIcons(
@@ -71,11 +75,11 @@ fun TextFieldWithIcons(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 15.dp, end = 5.dp),
+                    .padding(start = 15.dp, end = 15.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Leading icon image
-                CustomIcon(config.leadingIconRes)
+                if(config.leadingIconRes != null) CustomIcon(config.leadingIconRes)
 
                 OutlinedTextField(
                     value = value,
@@ -87,6 +91,7 @@ fun TextFieldWithIcons(
                     keyboardOptions = if (config.lineCount > 1) KeyboardOptions.Default.copy(
                         imeAction = ImeAction.Default // Enables multi-line input
                     ) else config.keyboardOptions,
+                    keyboardActions = config.keyboardActions,
                     singleLine = config.lineCount == 1,
                     textStyle = MaterialTheme.typography.bodyMedium.copy(
                         color = textColor
@@ -100,7 +105,11 @@ fun TextFieldWithIcons(
                         unfocusedBorderColor = Color.Transparent,
                         disabledBorderColor = Color.Transparent,
                         errorBorderColor = Color.Transparent,
-                        cursorColor = ColorTextDefault,
+                        cursorColor = config.cursorColor,
+                        selectionColors = TextSelectionColors(
+                            handleColor = config.cursorColor,  // color of the circle handle
+                            backgroundColor = config.cursorColor.copy(alpha = 0.4f)  // selection highlight color
+                        )
                     ),
                     minLines = 1,
                     maxLines = config.lineCount,
@@ -163,8 +172,6 @@ fun CustomIcon(
     iconRes?.let {
         Box(
             modifier = Modifier
-                .padding(vertical = 12.dp)
-                .padding(end = 8.dp)
         ) {
             Image(
                 painter = painterResource(id = it),
@@ -289,6 +296,41 @@ fun PreviewCustomTextFieldWithIconsEnabled() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp),
+        config = config
+    )
+}
+
+
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewCustomTextFieldWithIcons() {
+    var query by remember { mutableStateOf("") }
+
+    val config = TextFieldConfig(
+        textPlaceholder = stringResource(id = R.string.hint_enter_transaction_id),
+        errorMessage = stringResource(R.string.warning_email_not_valid),
+        isError = false,
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Done
+        ),
+        backgroundColor = Neutral100,
+        cursorColor = Neutral1100,
+        textColor = Neutral1100,
+        roundedSize = 12.dp,
+        keyboardActions = KeyboardActions(
+            onDone = {
+            }
+        ),
+    )
+
+    TextFieldWithIcons(
+        value = query,
+        onValueChange = {
+            query = it
+        },
+        modifier = Modifier.fillMaxWidth(),
         config = config
     )
 }

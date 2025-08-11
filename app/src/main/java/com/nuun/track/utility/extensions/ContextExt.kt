@@ -10,6 +10,9 @@ import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
 fun Context.toastShortExt(message: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
@@ -47,4 +50,14 @@ fun Context.getVideoThumbnailFromUri(uri: Uri): Bitmap? {
     } finally {
         retriever.release()
     }
+}
+
+fun Context.uriToMultipart(uri: Uri): MultipartBody.Part? {
+    val contentResolver = this.contentResolver
+    val fileName = uri.getFileName(contentResolver) ?: return null
+    val mimeType = contentResolver.getType(uri) ?: "application/octet-stream"
+
+    val inputStream = contentResolver.openInputStream(uri) ?: return null
+    val requestBody = inputStream.readBytes().toRequestBody(mimeType.toMediaTypeOrNull())
+    return MultipartBody.Part.createFormData("files[]", fileName, requestBody)
 }

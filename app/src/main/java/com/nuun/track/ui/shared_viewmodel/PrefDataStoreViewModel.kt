@@ -25,6 +25,15 @@ class PrefDataStoreViewModel @Inject constructor(
         }
     }
 
+    val updateFlag = prefDataStoreManager.getUpdateFlag()
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
+    fun setUpdateFlag(status: Boolean) {
+        viewModelScope.launch {
+            prefDataStoreManager.setUpdateFlag(status)
+        }
+    }
+
     fun clearDataStore() {
         viewModelScope.launch {
             prefDataStoreManager.clearDataStore()

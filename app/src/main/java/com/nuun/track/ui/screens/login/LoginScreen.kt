@@ -1,5 +1,7 @@
 package com.nuun.track.ui.screens.login
 
+import android.Manifest
+import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -29,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.nuun.track.R
+import com.nuun.track.core.configs.permissions.NotificationPermission
 import com.nuun.track.core.configs.state.ResultState
 import com.nuun.track.domain.auth.response.UserDomain
 import com.nuun.track.domain.configs.TextFieldConfig
@@ -41,6 +45,7 @@ import com.nuun.track.ui.components.forms.TextFieldWithIcons
 import com.nuun.track.ui.shared_viewmodel.EncryptedPrefViewModel
 import com.nuun.track.ui.shared_viewmodel.PrefDataStoreViewModel
 import com.nuun.track.ui.theme.ColorTextDefault
+import com.nuun.track.utility.extensions.checkDevicePermission
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -50,8 +55,23 @@ fun LoginScreen(
     encryptedPrefViewModel: EncryptedPrefViewModel = hiltViewModel(),
     prefViewModel: PrefDataStoreViewModel = hiltViewModel(),
 ) {
+
+    val context = LocalContext.current
     val loginState =
         remember { mutableStateOf<ResultState<UserDomain?>>(ResultState.Success(null)) }
+
+
+    val isNotificationPermission = remember { mutableStateOf(
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.checkDevicePermission(Manifest.permission.POST_NOTIFICATIONS)
+        } else false
+    ) }
+
+    NotificationPermission(
+        onPermissionGranted = {
+            isNotificationPermission.value = it
+        }
+    )
 
     LaunchedEffect(Unit) {
         loginViewModel.resultLogin.collectLatest { result ->
@@ -59,19 +79,25 @@ fun LoginScreen(
         }
     }
 
-    HandleLoginSuccess(
-        navController = navController,
-        encryptedPrefViewModel = encryptedPrefViewModel,
-        prefViewModel = prefViewModel,
-        loginState = loginState.value,
-    )
+    when(val result = loginState.value) {
+        is ResultState.Success -> {
+            HandleLoginSuccess(
+                navController = navController,
+                encryptedPrefViewModel = encryptedPrefViewModel,
+                prefViewModel = prefViewModel,
+                loginState = result,
+            )
+        }
 
-    HandleErrorStates(
-        navController = navController,
-        states = arrayOf(
-            loginState.value,
-        )
-    )
+        else -> {
+            HandleErrorStates(
+                navController = navController,
+                states = arrayOf(
+                    result,
+                )
+            )
+        }
+    }
 
     BackgroundBox {
         Column(
@@ -96,7 +122,6 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(20.dp))
             LoginButton(
-                navController = navController,
                 loginViewModel = loginViewModel,
                 encryptedPrefViewModel = encryptedPrefViewModel
             )
@@ -169,7 +194,6 @@ fun PasswordTextField(
 
 @Composable
 fun LoginButton(
-    navController: NavController,
     loginViewModel: LoginViewModel,
     encryptedPrefViewModel: EncryptedPrefViewModel
 ) {
@@ -196,13 +220,7 @@ fun LoginButton(
             text = stringResource(R.string.label_login),
             isLoadingEnabled = isLoading,
             onClick = {
-                // TODO: hit the API
                 loginViewModel.login(email, password)
-
-                // TODO: remove this later
-//                navController.navigate(HomeNavScreen.Homepage.route) {
-//                    popUpTo(AuthNavScreen.Login.route) { inclusive = true }
-//                }
             },
         )
     }
