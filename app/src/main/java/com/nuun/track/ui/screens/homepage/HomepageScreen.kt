@@ -94,7 +94,7 @@ fun HomepageScreen(
         Column(
             modifier = Modifier
                 .padding(top = paddingValues.calculateTopPadding())
-                .padding(10.dp)
+                .padding(horizontal = 10.dp)
                 .fillMaxSize()
         ) {
             Text(
@@ -293,7 +293,7 @@ fun ShowReservationList(
             }
         }
         CustomButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
             text = stringResource(R.string.label_logout),
             onClick = {
                 logout(
