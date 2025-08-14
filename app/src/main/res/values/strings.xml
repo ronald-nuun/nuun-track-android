@@ -22,6 +22,8 @@
 
     <!--region dummy-->
     <string name="dummy_text">Teks sampel</string>
+    <string name="dummy_name">Customer Name</string>
+    <string name="dummy_phone">081212341234</string>
     <string name="dummy_home">Rumah Saya</string>
     <string name="dummy_room">Apartemen Saya</string>
     <string name="dummy_email">don.corlenio@gmail.com</string>
@@ -74,7 +76,7 @@
     <string name="label_name">Nama</string>
     <string name="label_phone_number">Nomor HP</string>
     <string name="label_email">Email</string>
-    <string name="label_upload_vehicle_evidence">Upload Bukti Kondisi Kendaraan</string>
+    <string name="label_upload_vehicle_evidence">Mohon lengkapi bukti kendaraan</string>
     <string name="label_vehicle_evidence_start">Bukti Kondisi Mulai Kendaraan</string>
     <string name="label_vehicle_evidence_end">Bukti Kondisi Akhir Kendaraan</string>
     <string name="label_no_thumbnail">No thumbnail</string>
@@ -86,4 +88,5 @@
     <string name="label_duration">Durasi</string>
     <string name="label_total_price">Total Harga</string>
     <string name="label_video">Video</string>
+    <string name="label_evidence_tips"><![CDATA[(Foto Exterior Depan, Samping Kanan, Samping Kiri, Belakang, Interior Depan & Belakang)]]></string>
 </resources>

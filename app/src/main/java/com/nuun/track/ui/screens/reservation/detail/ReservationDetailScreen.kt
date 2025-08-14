@@ -219,7 +219,7 @@ fun ReservationDetailScreen(
                     },
                     isLoadingEnabled = isLoading,
                     onClick = {
-                        if (selectedUris.isNotEmpty()) {
+                        if (selectedUris.isNotEmpty() && selectedUris.size >= 5) {
                             reservationDetailViewModel.setHasFetchedReservationDetail(false)
                             reservationDetailViewModel.updateReservation(
                                 context = context,
@@ -365,28 +365,38 @@ fun AddEvidence(
         text = stringResource(R.string.label_upload_vehicle_evidence),
         color = ColorTextDefault,
     )
+    Text(
+        modifier = Modifier.fillMaxWidth(),
+        text = stringResource(R.string.label_evidence_tips),
+        color = ColorTextDefault,
+        fontSize = 11.sp
+    )
     FlowRow(
+        modifier = Modifier.fillMaxWidth(),
         maxItemsInEachRow = Int.MAX_VALUE,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(5.dp),
+        verticalArrangement = Arrangement.spacedBy(5.dp),
+        itemVerticalAlignment = Alignment.CenterVertically,
     ) {
         selectedUris.forEach { uri ->
-            Box(modifier = Modifier.clickable {
-                if (!isLoading) {
-                    val mimeType = context.contentResolver.getType(uri)
-                    when {
-                        mimeType?.startsWith("video") == true -> {
-                            reservationDetailViewModel.setImageToPreview(null)
-                            reservationDetailViewModel.setVideoToPlay(uri)
-                        }
+            Box(
+                modifier = Modifier
+                    .clickable {
+                        if (!isLoading) {
+                            val mimeType = context.contentResolver.getType(uri)
+                            when {
+                                mimeType?.startsWith("video") == true -> {
+                                    reservationDetailViewModel.setImageToPreview(null)
+                                    reservationDetailViewModel.setVideoToPlay(uri)
+                                }
 
-                        mimeType?.startsWith("image") == true -> {
-                            reservationDetailViewModel.setVideoToPlay(null)
-                            reservationDetailViewModel.setImageToPreview(uri)
+                                mimeType?.startsWith("image") == true -> {
+                                    reservationDetailViewModel.setVideoToPlay(null)
+                                    reservationDetailViewModel.setImageToPreview(uri)
+                                }
+                            }
                         }
-                    }
-                }
-            }) {
+                    }) {
                 MediaPreviewWithRemove(
                     uri = uri,
                     onRemove = {
@@ -416,6 +426,12 @@ fun DisplayEvidence(
         modifier = Modifier.fillMaxWidth(),
         text = title,
         color = ColorTextDefault
+    )
+    Text(
+        modifier = Modifier.fillMaxWidth(),
+        text = stringResource(R.string.label_evidence_tips),
+        color = ColorTextDefault,
+        fontSize = 11.sp
     )
     Spacer(modifier = Modifier.height(10.dp))
 

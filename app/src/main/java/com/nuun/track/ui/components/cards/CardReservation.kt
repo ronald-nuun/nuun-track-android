@@ -31,6 +31,7 @@ import com.nuun.track.navigation.screens.HomeNavScreen
 import com.nuun.track.ui.theme.ColorBgNav
 import com.nuun.track.ui.theme.ColorTextButton
 import com.nuun.track.ui.theme.Neutral600
+import com.nuun.track.utility.enums.ReservationStatus
 
 @Composable
 fun CardReservation(
@@ -65,17 +66,29 @@ fun CardReservation(
             Spacer(modifier = Modifier.size(10.dp))
             Column {
                 Text(
-                    text = reservation.customer?.name ?: "Customer Name",
+                    text = reservation.customer?.name ?: stringResource(R.string.dummy_name),
                     style = MaterialTheme.typography.titleMedium,
                     color = ColorBgNav,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = reservation.customer?.phone ?: "081212341234",
+                    text = reservation.customer?.phone ?: stringResource(R.string.dummy_phone),
                     style = MaterialTheme.typography.bodySmall,
                     color = ColorTextButton
                 )
             }
+            Spacer(modifier = Modifier.weight(1f))
+            val status = reservation.reservationDetail?.status
+            val textColor = when (status) {
+                ReservationStatus.END -> Color.Red
+                else -> Color.Gray
+            }
+
+            Text(
+                text = status?.name ?: "Unknown",
+                style = MaterialTheme.typography.bodySmall,
+                color = textColor
+            )
         }
     }
 }
