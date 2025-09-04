@@ -71,6 +71,7 @@ import com.nuun.track.navigation.screens.HomeNavScreen
 import com.nuun.track.ui.components.button.CustomButton
 import com.nuun.track.ui.components.media.MediaPreview
 import com.nuun.track.ui.components.toolbar.CustomToolbar
+import com.nuun.track.ui.screens.reservation.detail.SetupMediaCaption
 import com.nuun.track.ui.shared_viewmodel.MoshiViewModel
 import com.nuun.track.ui.theme.ColorBgIcon
 import com.nuun.track.ui.theme.ColorContainer
@@ -224,12 +225,14 @@ fun ReservationFormScreen(
                     itemVerticalAlignment = Alignment.CenterVertically,
                 ) {
                     selectedUris.forEachIndexed { index, uri ->
-                        Box {
-                            MediaPreview(
-                                uri = uri,
-                                label = steps[index].title,
-                                type = FileTypes.PHOTO
-                            )
+                        Column {
+                            Box {
+                                MediaPreview(
+                                    uri = uri,
+                                    type = FileTypes.PHOTO
+                                )
+                            }
+                            SetupMediaCaption(steps[index].title, 10.dp)
                         }
                     }
                 }

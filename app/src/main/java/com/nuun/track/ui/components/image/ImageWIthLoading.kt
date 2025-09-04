@@ -3,7 +3,8 @@ package com.nuun.track.ui.components.image
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -20,19 +21,18 @@ import coil.compose.rememberAsyncImagePainter
 @Composable
 fun ImageWithLoading(
     uri: Uri,
-    modifier: Modifier = Modifier,
     cornerRadius: Dp = 10.dp,
-    imageSize: Dp = 90.dp,
 ) {
     val painter = rememberAsyncImagePainter(uri)
     val painterState = painter.state
 
-    Box(modifier = modifier.size(imageSize)) {
+    Box {
         Image(
             painter = painter,
             contentDescription = null,
             modifier = Modifier
-                .size(imageSize)
+                .fillMaxWidth()
+                .aspectRatio(1f)
                 .clip(
                 RoundedCornerShape(
                     topStart = cornerRadius,
@@ -48,7 +48,8 @@ fun ImageWithLoading(
             CircularProgressIndicator(
                 color = Color.White,
                 modifier = Modifier
-                    .size(imageSize)
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
                     .align(Alignment.Center)
             )
         }

@@ -12,8 +12,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -54,6 +57,7 @@ import com.nuun.track.ui.components.media.MediaPreviewDialog
 import com.nuun.track.ui.components.texts.TextIcon
 import com.nuun.track.ui.components.toolbar.CustomToolbar
 import com.nuun.track.ui.shared_viewmodel.MoshiViewModel
+import com.nuun.track.ui.theme.ColorBgIcon
 import com.nuun.track.ui.theme.ColorContainer
 import com.nuun.track.ui.theme.ColorTextDefault
 import com.nuun.track.utility.consts.AppConsts
@@ -360,15 +364,20 @@ fun DisplayEvidence(
         "Interior Belakang"
     )
     val evidences = if (evidenceStart) reservation.evidenceStart else reservation.evidenceEnd
-    FlowRow(
-        maxItemsInEachRow = Int.MAX_VALUE,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.fillMaxWidth()
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3), // Fix 3 columns per row
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 0.dp, max = 430.dp)
     ) {
-        evidences?.forEachIndexed { index, evidence ->
+        itemsIndexed(evidences ?: emptyList()) { index, evidence ->
             val urlUri: Uri = (AppConsts.API_URL + evidence.fileUrl).toUri()
-            Box(modifier = Modifier.clickable {
+
+            Column(
+                modifier = Modifier.clickable {
                 when (evidence.fileType) {
                     FileTypes.PHOTO -> {
                         reservationDetailViewModel.setVideoToPlay(null)
@@ -380,17 +389,33 @@ fun DisplayEvidence(
                         reservationDetailViewModel.setVideoToPlay(urlUri)
                     }
                 }
-            }) {
-                evidence.fileType?.let { type ->
-                    MediaPreview(
-                        uri = urlUri,
-                        type = type,
-                        label = labels.getOrNull(index)
-                    )
+            }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(
+                            RoundedCornerShape(
+                                topStart = 10.dp,
+                                topEnd = 10.dp,
+                                bottomEnd = 0.dp,
+                                bottomStart = 0.dp
+                            )
+                        )
+                        .background(ColorBgIcon)
+                ) {
+                    evidence.fileType?.let { type ->
+                        MediaPreview(uri = urlUri, type = type)
+                    }
+                }
+
+                labels.getOrNull(index)?.let {
+                    SetupMediaCaption(it, 10.dp)
                 }
             }
         }
     }
+
 }
 
 @Composable
@@ -400,18 +425,17 @@ fun SetupMediaCaption(
 ) {
     Box(
         modifier = Modifier
-            .width(90.dp)
+            .fillMaxWidth()
             .height(40.dp)
-            .background(Color.White.copy(alpha = 0.9f))
-            .padding(4.dp)
             .clip(
                 RoundedCornerShape(
-                    topStart = cornerRadius,
-                    topEnd = cornerRadius,
-                    bottomEnd = 0.dp,
-                    bottomStart = 0.dp
+                    topStart = 0.dp,
+                    topEnd = 0.dp,
+                    bottomEnd = cornerRadius,
+                    bottomStart = cornerRadius
                 )
-            ),
+            )
+            .background(Color.White.copy(alpha = 0.9f)),
         contentAlignment = Alignment.Center
     ) {
         Text(
