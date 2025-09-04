@@ -36,7 +36,7 @@ fun HandleErrorStates(
             ErrorApiStateHandler.handleErrorState(
                 throwable = throwable,
                 onHandleableException = { exception ->
-                    context.toastShortExt("${exception.message}, ${exception.stackTrace}")
+                    context.toastShortExt(exception.message)
                 },
                 onGeneralException = {
                     ErrorHandlerProviderImpl().generalError(context, lifecycleOwner, throwable)
