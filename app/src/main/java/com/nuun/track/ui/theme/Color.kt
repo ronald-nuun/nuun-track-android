@@ -52,7 +52,7 @@ val ColorDisabled = Neutral900
 val ColorEnabled = Color(0xFF1A7DAB)
 val ColorInputDefault = Neutral800
 val ColorBgIcon = Neutral700
-val ColorOnline = Neutral200
+val ColorOnline = Green200
 val ColorOffline = Neutral900
 val ColorTopBar = Neutral1100
 

@@ -180,7 +180,11 @@ fun HomepageScreen(
                             encryptedPrefViewModel,
                             tokenManager,
                             navController,
-                            error.message.toString()
+                            if (error.message != null)
+                                error.message.toString()
+                            else stringResource(
+                                id = R.string.error_no_data
+                            )
                         )
                     }
             }
@@ -293,7 +297,9 @@ fun ShowReservationList(
             }
         }
         CustomButton(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp),
             text = stringResource(R.string.label_logout),
             onClick = {
                 logout(

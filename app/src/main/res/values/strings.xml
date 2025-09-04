@@ -5,6 +5,11 @@
     <string name="title_notification_permission">Izin Pemberitahuan</string>
     <string name="label_notification_permission_detail">Harap berikan izin pemberitahuan untuk mengakses semua fitur.</string>
     <string name="label_notification_permission_permanently_denied">Izin notifikasi telah ditolak secara permanen. Harap aktifkan secara manual di pengaturan untuk menggunakan semua fitur.</string>
+
+
+    <string name="title_camera_permission">Izin Kamera</string>
+    <string name="label_camera_permission_detail">Harap berikan izin kamera untuk mengakses semua fitur.</string>
+    <string name="label_camera_permission_permanently_denied">Izin kamera telah ditolak secara permanen. Harap aktifkan secara manual di pengaturan untuk menggunakan semua fitur.</string>
     <!--endregion Permission Strings-->
 
     <!--region Internet Connection-->
@@ -73,6 +78,7 @@
     <string name="label_start_trip">Mulai Perjalanan</string>
     <string name="label_return_confirmation">Konfirmasi Pengembalian</string>
     <string name="label_customer_information">Informasi Pelanggan</string>
+    <string name="label_form_car_evidence">Form Bukti Kendaraan</string>
     <string name="label_name">Nama</string>
     <string name="label_phone_number">Nomor HP</string>
     <string name="label_email">Email</string>
@@ -89,4 +95,8 @@
     <string name="label_total_price">Total Harga</string>
     <string name="label_video">Video</string>
     <string name="label_evidence_tips"><![CDATA[(Foto Exterior Depan, Samping Kanan, Samping Kiri, Belakang, Interior Depan & Belakang)]]></string>
+    <string name="label_image_already_exist">Gambar ini telah dipilih</string>
+    <string name="label_next">Selanjutnya</string>
+    <string name="label_upload">Unggah</string>
+    <string name="label_example_image">Contoh Gambar</string>
 </resources>

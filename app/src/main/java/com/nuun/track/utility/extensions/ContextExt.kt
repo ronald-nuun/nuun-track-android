@@ -35,6 +35,13 @@ fun Context.openNotificationSettings() {
     this.startActivity(intent)
 }
 
+fun Context.openCameraPermissionSettings() {
+    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+        data = Uri.fromParts("package", packageName, null)
+    }
+    startActivity(intent)
+}
+
 fun Context.getMimeType(uri: Uri): String? {
     return this.contentResolver.getType(uri)
 }

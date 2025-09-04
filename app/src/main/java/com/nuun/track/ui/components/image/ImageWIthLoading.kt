@@ -31,7 +31,16 @@ fun ImageWithLoading(
         Image(
             painter = painter,
             contentDescription = null,
-            modifier = Modifier.size(imageSize).clip(RoundedCornerShape(cornerRadius)),
+            modifier = Modifier
+                .size(imageSize)
+                .clip(
+                RoundedCornerShape(
+                    topStart = cornerRadius,
+                    topEnd = cornerRadius,
+                    bottomEnd = 0.dp,
+                    bottomStart = 0.dp
+                )
+            ),
             contentScale = ContentScale.Crop
         )
 

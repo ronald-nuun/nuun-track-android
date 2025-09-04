@@ -10,8 +10,6 @@ import com.squareup.moshi.JsonClass
 data class ReservationFilesDto(
     @Json(name = "id")
     val id: Int?,
-    @Json(name = "url")
-    val url: String?,
     @Json(name = "file_url")
     val fileUrl: String?,
     @Json(name = "file_type")
@@ -21,7 +19,6 @@ data class ReservationFilesDto(
 ) {
     fun toDomain(): ReservationFilesDomain = ReservationFilesDomain(
         id = id.orZero(),
-        url = url.orEmpty(),
         fileUrl = fileUrl.orEmpty(),
         fileType = fileType,
         createdAt = createdAt.orEmpty()

@@ -28,6 +28,7 @@ class ErrorHandlerProviderImpl @Inject constructor(): ErrorHandlerProvider {
         throwable: Throwable
     ) {
         logger.error("ERROR CONSUME API: ${throwable.message}")
+        logger.error("ERROR CONSUME API: ${throwable.stackTrace}")
         val message = when (throwable) {
             is UnknownHostException, is SocketTimeoutException ->
                 context.getString(R.string.label_no_internet_error_message)
