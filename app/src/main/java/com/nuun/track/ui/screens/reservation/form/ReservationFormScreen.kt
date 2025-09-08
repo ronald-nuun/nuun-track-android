@@ -40,10 +40,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -78,6 +78,7 @@ import com.nuun.track.ui.theme.ColorContainer
 import com.nuun.track.ui.theme.ColorOnline
 import com.nuun.track.ui.theme.ColorTextDefault
 import com.nuun.track.utility.consts.ExtraConst
+import com.nuun.track.utility.enums.EvidenceTypes
 import com.nuun.track.utility.enums.FileTypes
 import com.nuun.track.utility.enums.ReservationStatus
 import com.nuun.track.utility.extensions.checkDevicePermission
@@ -99,32 +100,12 @@ fun ReservationFormScreen(
     var currentStep by remember { mutableIntStateOf(0) }
 
     val steps = remember {
-        mutableStateListOf(
+        EvidenceTypes.entries.map {
             EvidenceStep(
-                title = "Exterior Depan",
-                exampleImage = R.drawable.ic_car_front
-            ),
-            EvidenceStep(
-                title = "Exterior Belakang",
-                exampleImage = R.drawable.ic_car_back
-            ),
-            EvidenceStep(
-                title = "Exterior Kanan",
-                exampleImage = R.drawable.ic_car_right
-            ),
-            EvidenceStep(
-                title = "Exterior Kiri",
-                exampleImage = R.drawable.ic_car_left
-            ),
-            EvidenceStep(
-                title = "Interior Depan",
-                exampleImage = R.drawable.ic_car_ext_front
-            ),
-            EvidenceStep(
-                title = "Interior Belakang",
-                exampleImage = R.drawable.ic_car_ext_back
-            ),
-        )
+                title = it.label,
+                exampleImage = it.exampleImage
+            )
+        }.toMutableStateList()
     }
 
     InitCameraPermission(context)

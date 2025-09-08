@@ -82,6 +82,7 @@ compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-material-icon-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 hilt-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltCompose" }
 
 # Intuit
@@ -154,6 +155,7 @@ compose = [
     "compose-ui-graphics",
     "compose-ui-tooling-preview",
     "compose-material3",
+    "compose-material-icon-extended",
     "hilt-compose"
 ]
 intuit = [

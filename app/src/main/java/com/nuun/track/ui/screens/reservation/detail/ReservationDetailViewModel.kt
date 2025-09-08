@@ -26,17 +26,17 @@ class ReservationDetailViewModel @Inject constructor(
         _reservation.value = data
     }
 
-    private val _videoToPlay = MutableStateFlow<Uri?>(null)
-    val videoToPlay: StateFlow<Uri?> = _videoToPlay.asStateFlow()
+    private val _videoToPlay = MutableStateFlow<Pair<String, List<Uri?>>?>(null)
+    val videoToPlay: StateFlow<Pair<String, List<Uri?>>?> = _videoToPlay.asStateFlow()
 
-    fun setVideoToPlay(uri: Uri?) {
+    fun setVideoToPlay(uri: Pair<String, List<Uri?>>?) {
         _videoToPlay.value = uri
     }
 
-    private val _imageToPreview = MutableStateFlow<Uri?>(null)
-    val imageToPreview: StateFlow<Uri?> = _imageToPreview.asStateFlow()
+    private val _imageToPreview = MutableStateFlow<Pair<String, List<Uri?>>?>(null)
+    val imageToPreview: StateFlow<Pair<String, List<Uri?>>?> = _imageToPreview.asStateFlow()
 
-    fun setImageToPreview(uri: Uri?) {
+    fun setImageToPreview(uri: Pair<String, List<Uri?>>?) {
         _imageToPreview.value = uri
     }
 

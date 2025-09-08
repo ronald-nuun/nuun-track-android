@@ -62,6 +62,7 @@ import com.nuun.track.ui.theme.ColorContainer
 import com.nuun.track.ui.theme.ColorTextDefault
 import com.nuun.track.utility.consts.AppConsts
 import com.nuun.track.utility.consts.ExtraConst
+import com.nuun.track.utility.enums.EvidenceTypes
 import com.nuun.track.utility.enums.FileTypes
 import com.nuun.track.utility.enums.ReservationStatus
 import com.nuun.track.utility.extensions.formatToCurrency
@@ -150,17 +151,19 @@ fun ReservationDetailScreen(
             }
 
             if (!isLoading) {
-                videoToPlay?.let {
+                videoToPlay?.let { (title, uris) ->
                     MediaPreviewDialog(
-                        uri = it,
+                        title = title,
+                        uris = uris,
                         isVideo = true,
-                        onDismiss = { reservationDetailViewModel.setVideoToPlay(null) }
+                        onDismiss = { reservationDetailViewModel.setVideoToPlay(null) },
                     )
                 }
 
-                imageToPreview?.let {
+                imageToPreview?.let { (title, uris) ->
                     MediaPreviewDialog(
-                        uri = it,
+                        title = title,
+                        uris = uris,
                         isVideo = false,
                         onDismiss = { reservationDetailViewModel.setImageToPreview(null) }
                     )
@@ -355,14 +358,7 @@ fun DisplayEvidence(
     )
     Spacer(modifier = Modifier.height(10.dp))
 
-    val labels = listOf(
-        "Exterior Depan",
-        "Exterior Belakang",
-        "Exterior Kanan",
-        "Exterior Kiri",
-        "Interior Depan",
-        "Interior Belakang"
-    )
+    val labels = EvidenceTypes.entries.map { it.label }
     val evidences = if (evidenceStart) reservation.evidenceStart else reservation.evidenceEnd
 
     LazyVerticalGrid(
@@ -375,18 +371,27 @@ fun DisplayEvidence(
     ) {
         itemsIndexed(evidences ?: emptyList()) { index, evidence ->
             val urlUri: Uri = (AppConsts.API_URL + evidence.fileUrl).toUri()
+            val uris = buildList {
+                reservation.evidenceStart?.getOrNull(index)?.let { evidence ->
+                    add((AppConsts.API_URL + evidence.fileUrl).toUri())
+                }
+                reservation.evidenceEnd?.getOrNull(index)?.let { evidence ->
+                    add((AppConsts.API_URL + evidence.fileUrl).toUri())
+                }
+            }
+            val preview = labels[index] to uris
 
             Column(
                 modifier = Modifier.clickable {
-                when (evidence.fileType) {
+                    when (evidence.fileType) {
                     FileTypes.PHOTO -> {
                         reservationDetailViewModel.setVideoToPlay(null)
-                        reservationDetailViewModel.setImageToPreview(urlUri)
+                        reservationDetailViewModel.setImageToPreview(preview)
                     }
 
                     else -> {
                         reservationDetailViewModel.setImageToPreview(null)
-                        reservationDetailViewModel.setVideoToPlay(urlUri)
+                        reservationDetailViewModel.setVideoToPlay(preview)
                     }
                 }
             }
