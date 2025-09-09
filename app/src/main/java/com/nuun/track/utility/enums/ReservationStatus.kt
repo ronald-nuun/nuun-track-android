@@ -2,13 +2,13 @@ package com.nuun.track.utility.enums
 
 import com.squareup.moshi.Json
 
-enum class ReservationStatus {
+enum class ReservationStatus(val code: Int) {
     @Json(name = "pending")
-    PENDING,
+    PENDING(0),
     @Json(name = "start")
-    START,
+    START(1),
     @Json(name = "ongoing")
-    ONGOING,
+    ONGOING(2),
     @Json(name = "end")
-    END
+    END(3)
 }

@@ -23,16 +23,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,7 +42,6 @@ import com.nuun.track.R
 import com.nuun.track.core.configs.networking.TokenManager
 import com.nuun.track.core.configs.state.ResultState
 import com.nuun.track.domain.configs.TextFieldConfig
-import com.nuun.track.domain.reservation.response.ReservationDomain
 import com.nuun.track.ui.common.HandleErrorStates
 import com.nuun.track.ui.components.button.CustomButton
 import com.nuun.track.ui.components.cards.CardReservation
@@ -69,21 +69,12 @@ fun HomepageScreen(
     val refreshState = rememberPullToRefreshState()
     val pageViewState by homepageViewModel.pageViewState.collectAsState()
     val isRefreshing by homepageViewModel.isRefreshing.collectAsState()
-
-    val reservationState = remember {
-        mutableStateOf<ResultState<List<ReservationDomain>?>>(ResultState.Success(null))
-    }
-
-    LaunchedEffect(Unit) {
-        homepageViewModel.getRecentReservation()
-        homepageViewModel.resultReservation.collect { result ->
-            reservationState.value = result
-        }
-    }
+    val query by homepageViewModel.query.collectAsState()
+    val prevQuery by homepageViewModel.prevQuery.collectAsState()
 
     LaunchedEffect(isRefreshing) {
         if (isRefreshing) {
-            homepageViewModel.getRecentReservation()
+            homepageViewModel.getFilteredReservation(query)
             homepageViewModel.updateIsRefreshing(false)
         }
     }
@@ -105,7 +96,8 @@ fun HomepageScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
             SearchTextField(
-                homepageViewModel
+                homepageViewModel = homepageViewModel,
+                query = query
             )
             Spacer(modifier = Modifier.height(18.dp))
             PullToRefreshBox(
@@ -158,12 +150,29 @@ fun HomepageScreen(
                             encryptedPrefViewModel
                         )
                     }
-                    .onEmpty {
+                    .onIdle {
                         NoData(
-                            prefViewModel,
-                            encryptedPrefViewModel,
-                            tokenManager,
-                            navController
+                            message = stringResource(R.string.label_find_reservation),
+                            prefViewModel = prefViewModel,
+                            encryptedPrefViewModel = encryptedPrefViewModel,
+                            tokenManager = tokenManager,
+                            navController = navController
+                        )
+                    }
+                    .onEmpty {
+                        val text = buildAnnotatedString {
+                            append(stringResource(R.string.label_data))
+                            withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                                append(" \"$prevQuery\" ")
+                            }
+                            append(stringResource(R.string.label_not_found))
+                        }
+                        NoData(
+                            message = text.toString(),
+                            prefViewModel = prefViewModel,
+                            encryptedPrefViewModel = encryptedPrefViewModel,
+                            tokenManager = tokenManager,
+                            navController = navController
                         )
                     }
                     .onError { error ->
@@ -176,15 +185,16 @@ fun HomepageScreen(
                             )
                         )
                         NoData(
-                            prefViewModel,
-                            encryptedPrefViewModel,
-                            tokenManager,
-                            navController,
-                            if (error.message != null)
-                                error.message.toString()
-                            else stringResource(
-                                id = R.string.error_no_data
-                            )
+                            message =
+                                if (error.message != null)
+                                    error.message.toString()
+                                else stringResource(
+                                    id = R.string.error_no_data
+                                ),
+                            prefViewModel = prefViewModel,
+                            encryptedPrefViewModel = encryptedPrefViewModel,
+                            tokenManager = tokenManager,
+                            navController = navController
                         )
                     }
             }
@@ -194,11 +204,11 @@ fun HomepageScreen(
 
 @Composable
 fun NoData(
+    message: String = stringResource(id = R.string.error_no_data),
     prefViewModel: PrefDataStoreViewModel,
     encryptedPrefViewModel: EncryptedPrefViewModel,
     tokenManager: TokenManager,
     navController: NavController,
-    message: String = stringResource(id = R.string.error_no_data)
 ) {
     Column(
         modifier = Modifier
@@ -237,9 +247,9 @@ fun NoData(
 
 @Composable
 fun SearchTextField(
-    homepageViewModel: HomepageViewModel
+    homepageViewModel: HomepageViewModel,
+    query: String
 ) {
-    val query by homepageViewModel.query.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
 
     val config = TextFieldConfig(
@@ -259,8 +269,7 @@ fun SearchTextField(
                 keyboardController?.hide()
                 homepageViewModel.getFilteredReservation(query)
             }
-        ),
-        autoShowClear = true
+        )
     )
 
     TextFieldWithIcons(

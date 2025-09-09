@@ -99,4 +99,7 @@
     <string name="label_next">Selanjutnya</string>
     <string name="label_upload">Unggah</string>
     <string name="label_example_image">Contoh Gambar</string>
+    <string name="label_find_reservation">Cari reservasi</string>
+    <string name="label_data">Data</string>
+    <string name="label_not_found"> tidak ditemukan</string>
 </resources>

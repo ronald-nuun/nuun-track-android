@@ -2,12 +2,10 @@ package com.nuun.track.ui.screens.homepage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nuun.track.core.configs.state.ResultState
 import com.nuun.track.core.configs.state.ViewState
 import com.nuun.track.domain.reservation.request.ReservationRequest
 import com.nuun.track.domain.reservation.response.ReservationDomain
 import com.nuun.track.domain.reservation.usecase.ReservationListQueryUseCase
-import com.nuun.track.utility.logger.ApiLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,10 +18,8 @@ class HomepageViewModel @Inject constructor(
     private val reservationListQueryUseCase: ReservationListQueryUseCase,
 ) : ViewModel() {
 
-    val apiLogger = ApiLogger()
-
     private val _pageViewState by lazy {
-        MutableStateFlow<ViewState<List<ReservationDomain>>>(ViewState.Loading)
+        MutableStateFlow<ViewState<List<ReservationDomain>>>(ViewState.Idle)
     }
 
     val pageViewState: StateFlow<ViewState<List<ReservationDomain>>> get() = _pageViewState.asStateFlow()
@@ -39,6 +35,9 @@ class HomepageViewModel @Inject constructor(
         _isRefreshing.value = isRefreshing
     }
 
+    private val _prevQuery by lazy { MutableStateFlow("") }
+    val prevQuery: StateFlow<String> get() = _prevQuery.asStateFlow()
+
     private val _query by lazy { MutableStateFlow("") }
     val query: StateFlow<String> get() = _query.asStateFlow()
 
@@ -46,32 +45,11 @@ class HomepageViewModel @Inject constructor(
         _query.value = query
     }
 
-    private val _resultReservation by lazy { MutableStateFlow<ResultState<List<ReservationDomain>?>>(
-        ResultState.Success(emptyList())) }
-    val resultReservation: StateFlow<ResultState<List<ReservationDomain>?>> get() = _resultReservation.asStateFlow()
-
-    fun getRecentReservation() {
-        viewModelScope.launch {
-            val request = ReservationRequest()
-            reservationListQueryUseCase.execute(ReservationListQueryUseCase.RequestValues(request)).result.let {
-                _resultReservation.emit(it)
-                it.onSuccess { data ->
-                    when {
-                        data.isNullOrEmpty() -> setPageViewState(ViewState.Empty)
-                        else -> setPageViewState(ViewState.Success(data))
-                    }
-                }.onError { error ->
-                    setPageViewState(ViewState.Error(error))
-                }
-            }
-        }
-    }
-
     fun getFilteredReservation(query: String) {
         viewModelScope.launch {
             val request = ReservationRequest(query = query)
+            _prevQuery.emit(query)
             reservationListQueryUseCase.execute(ReservationListQueryUseCase.RequestValues(request)).result.let {
-                _resultReservation.emit(it)
                 it.onSuccess { data ->
                     when {
                         data.isNullOrEmpty() -> setPageViewState(ViewState.Empty)

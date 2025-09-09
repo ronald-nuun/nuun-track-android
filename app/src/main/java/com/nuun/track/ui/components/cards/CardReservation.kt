@@ -31,6 +31,7 @@ import com.nuun.track.navigation.screens.HomeNavScreen
 import com.nuun.track.ui.theme.ColorBgNav
 import com.nuun.track.ui.theme.ColorTextButton
 import com.nuun.track.ui.theme.Neutral600
+import com.nuun.track.ui.theme.Neutral800
 import com.nuun.track.utility.enums.ReservationStatus
 
 @Composable
@@ -72,7 +73,7 @@ fun CardReservation(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = reservation.customer?.phone ?: stringResource(R.string.dummy_phone),
+                    text = reservation.vehicle?.license ?: stringResource(R.string.dummy_phone),
                     style = MaterialTheme.typography.bodySmall,
                     color = ColorTextButton
                 )
@@ -81,13 +82,14 @@ fun CardReservation(
             val status = reservation.reservationDetail?.status
             val textColor = when (status) {
                 ReservationStatus.END -> Color.Red
-                else -> Color.Gray
+                else -> Neutral800
             }
 
             Text(
                 text = status?.name ?: "Unknown",
                 style = MaterialTheme.typography.bodySmall,
-                color = textColor
+                color = textColor,
+                fontWeight = FontWeight.SemiBold
             )
         }
     }

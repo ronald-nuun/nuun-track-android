@@ -6,19 +6,19 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class VehicleDto(
-    @Json(name = "id")
+    @param:Json(name = "id")
     val id: Int,
-    @Json(name = "serial_number")
-    val serialNumber: String?,
-    @Json(name = "name")
-    val name: String?,
-    @Json(name = "police_number")
-    val policeNumber: String?,
+    @param:Json(name = "brand")
+    val brand: String?,
+    @param:Json(name = "type")
+    val type: String?,
+    @param:Json(name = "license")
+    val license: String?,
 ) {
     fun toDomain(): VehicleDomain = VehicleDomain(
         id = id,
-        serialNumber = serialNumber.orEmpty(),
-        name = name.orEmpty(),
-        policeNumber = policeNumber.orEmpty(),
+        brand = brand.orEmpty(),
+        type = type.orEmpty(),
+        license = license.orEmpty(),
     )
 }

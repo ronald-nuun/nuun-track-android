@@ -3,6 +3,7 @@ package com.nuun.track.core.configs.state
 import androidx.compose.runtime.Composable
 
 sealed class ViewState<out R> {
+    object Idle : ViewState<Nothing>()
     object Loading : ViewState<Nothing>()
     object Empty : ViewState<Nothing>()
     data class Success<out T>(val data: T) : ViewState<T>()
@@ -10,6 +11,7 @@ sealed class ViewState<out R> {
 
     override fun toString(): String {
         return when (this) {
+            is Idle -> "Idle"
             is Success<*> -> "Success[data=$data]"
             is Empty -> "Empty"
             is Loading -> "Loading"
@@ -45,6 +47,14 @@ sealed class ViewState<out R> {
         block: @Composable () -> Unit
     ): ViewState<R> {
         if (this is Empty) block.invoke()
+        return this
+    }
+
+    @Composable
+    fun onIdle(
+        block: @Composable () -> Unit
+    ): ViewState<R> {
+        if (this is Idle) block.invoke()
         return this
     }
 
