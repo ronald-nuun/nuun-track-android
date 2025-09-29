@@ -22,13 +22,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -68,6 +72,7 @@ import com.nuun.track.utility.enums.ReservationStatus
 import com.nuun.track.utility.extensions.formatToCurrency
 import com.nuun.track.utility.extensions.toastShortExt
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReservationDetailScreen(
     navController: NavController,
@@ -77,6 +82,7 @@ fun ReservationDetailScreen(
     val context = LocalContext.current
     val reservation by reservationDetailViewModel.reservation.collectAsState()
     val isLoading by reservationDetailViewModel.isLoading.collectAsState()
+    val isRefreshing by reservationDetailViewModel.isRefreshing.collectAsState()
     val status = reservation?.reservationDetail?.status
     val resultReservationDetail by reservationDetailViewModel.resultReservationDetail.collectAsState()
 
@@ -100,6 +106,18 @@ fun ReservationDetailScreen(
                     reservationId = reserve?.id.toString()
                 )
             )
+        }
+    }
+
+    val refreshState = rememberPullToRefreshState()
+    LaunchedEffect(isRefreshing) {
+        if (isRefreshing) {
+            reservationDetailViewModel.getReservationDetail(
+                ReservationDetailRequest(
+                    reservationId = reservation?.id.toString()
+                )
+            )
+            reservationDetailViewModel.updateIsRefreshing(false)
         }
     }
 
@@ -131,42 +149,48 @@ fun ReservationDetailScreen(
         },
         containerColor = ColorContainer,
     ) { paddingValues ->
-        Column(
-            Modifier
-                .padding(top = paddingValues.calculateTopPadding())
-                .padding(10.dp)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+        PullToRefreshBox(
+            state = refreshState,
+            onRefresh = { reservationDetailViewModel.updateIsRefreshing(true) },
+            isRefreshing = isRefreshing,
         ) {
-            CustomerDetail(reservation)
-            Spacer(modifier = Modifier.height(10.dp))
-            ReservationDetail(reservation)
-            reservation?.let {
-                Evidences(
-                    navController,
-                    reservationDetailViewModel,
-                    it,
-                    status,
-                )
-            }
-
-            if (!isLoading) {
-                videoToPlay?.let { (title, uris) ->
-                    MediaPreviewDialog(
-                        title = title,
-                        uris = uris,
-                        isVideo = true,
-                        onDismiss = { reservationDetailViewModel.setVideoToPlay(null) },
+            Column(
+                Modifier
+                    .padding(top = paddingValues.calculateTopPadding())
+                    .padding(10.dp)
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                CustomerDetail(reservation)
+                Spacer(modifier = Modifier.height(10.dp))
+                ReservationDetail(reservation)
+                reservation?.let {
+                    Evidences(
+                        navController,
+                        reservationDetailViewModel,
+                        it,
+                        status,
                     )
                 }
 
-                imageToPreview?.let { (title, uris) ->
-                    MediaPreviewDialog(
-                        title = title,
-                        uris = uris,
-                        isVideo = false,
-                        onDismiss = { reservationDetailViewModel.setImageToPreview(null) }
-                    )
+                if (!isLoading) {
+                    videoToPlay?.let { (title, uris) ->
+                        MediaPreviewDialog(
+                            title = title,
+                            uris = uris,
+                            isVideo = true,
+                            onDismiss = { reservationDetailViewModel.setVideoToPlay(null) },
+                        )
+                    }
+
+                    imageToPreview?.let { (title, uris) ->
+                        MediaPreviewDialog(
+                            title = title,
+                            uris = uris,
+                            isVideo = false,
+                            onDismiss = { reservationDetailViewModel.setImageToPreview(null) }
+                        )
+                    }
                 }
             }
         }
@@ -409,9 +433,7 @@ fun DisplayEvidence(
                         )
                         .background(ColorBgIcon)
                 ) {
-                    evidence.fileType?.let { type ->
-                        MediaPreview(uri = urlUri, type = type)
-                    }
+                    MediaPreview(uri = urlUri, type = evidence.fileType)
                 }
 
                 labels.getOrNull(index)?.let {

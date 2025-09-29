@@ -20,7 +20,7 @@ data class ReservationFilesDto(
     fun toDomain(): ReservationFilesDomain = ReservationFilesDomain(
         id = id.orZero(),
         fileUrl = fileUrl.orEmpty(),
-        fileType = fileType,
+        fileType = fileType ?: FileTypes.PHOTO,
         createdAt = createdAt.orEmpty()
     )
 }

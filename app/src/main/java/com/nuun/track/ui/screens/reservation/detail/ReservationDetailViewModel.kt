@@ -63,9 +63,17 @@ class ReservationDetailViewModel @Inject constructor(
             _isLoading.value = true
             reservationDetailUseCase.execute(ReservationDetailUseCase.RequestValues(request)).result.let {
                 _isLoading.value = false
+                updateIsRefreshing(false)
                 _resultReservationDetail.emit(it)
             }
         }
+    }
+
+    private val _isRefreshing by lazy { MutableStateFlow(false) }
+    val isRefreshing: StateFlow<Boolean> get() = _isRefreshing.asStateFlow()
+
+    fun updateIsRefreshing(isRefreshing: Boolean) {
+        _isRefreshing.value = isRefreshing
     }
 
 }
